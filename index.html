@@ -1,0 +1,866 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Архитектор Ростовской Эпохи | А.М. Байков</title>
+    <style>
+        :root {
+            --primary: #8b263e;
+            --secondary: #d4af37;
+            --dark: #1a1a24;
+            --light: #e9ecef;  /* Светло-серый оттенок фона */
+            --gray: #e2ddd5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background-color:  #ced4da; /* Сделайте здесь нужный вам серый оттенок */
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        header {
+            background: var(--dark) url('panorama.png') no-repeat center center;
+            background-size: cover;
+            color: #fff;
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary);
+            position: relative;
+        }
+
+        /* Затемнение фона, чтобы текст и аватарка были отлично читаемы на фоне картинки */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 26, 36, 0.75); /* Темный полупрозрачный фильтр */
+            z-index: 1;
+        }
+
+        header .hero-profile {
+            position: relative;
+            z-index: 2; /* Поднимает текст и аватарку поверх фонового изображения */
+        }
+        .avatar {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 40%;
+            border: 4px solid var(--secondary);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            background-color: #333;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-family: sans-serif;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 5px;
+        }
+
+ /* Блок информации из книги / обложка */
+        .book-section {
+            background: #fff;
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .book-img {
+            width: 160px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            content: url("Обложка.png");
+        }
+
+        .book-content {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .book-content h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .book-content ul {
+            margin-left: 20px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+        }
+        /* Галерея карточек */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 30px 0 50px 0;
+        }
+
+        .gallery-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background-color: var(--gray);
+            display: block;
+        }
+
+        .gallery-card .card-text {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .gallery-card h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        /* Интерактивный симулятор */
+      {
+            background: #c0c0c0; /* Приятный зеленый фон */
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        /* Делаем белым только этот конкретный первый текст под заголовком */
+        .interactive-sim > p:first-of-type {
+            color: #000000 !important;
+        }
+      .state-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 22px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1); /* Плавная и мягкая анимация */
+        }
+
+        /* Эффект при наведении мыши на плашку */
+        .state-card:hover {
+            transform: translateY(-6px) scale(1.02); /* Карточка приподнимается и слегка увеличивается */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25); /* Глубокая красивая тень */
+            border-left-color: var(--secondary); /* Цвет левой полоски меняется на золотой при наведении */
+        }
+
+        .state-card h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .state-card p {
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+        .interactive-sim {
+            background: #с0с0с0; /* Приятный серый фон */
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+
+        .sim-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .toggle-btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .sim-btn {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-before {
+            background: #7f8c8d;
+            color: white;
+        }
+
+        .btn-after {
+            background: var(--primary);
+            color: white;
+        }
+
+        .sim-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            outline: 2px solid var(--secondary);
+        }
+
+        .city-state {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .state-card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .state-card h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        /* Викторина */
+        .quiz-section {
+            background: var(--dark);
+            color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 40px;
+        }
+
+        .quiz-section h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .quiz-progress {
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-family: sans-serif;
+        }
+
+        .quiz-option {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .quiz-option:hover:not([disabled]) {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .quiz-option.correct {
+            background: rgba(46, 204, 113, 0.3) !important;
+            border-color: #2ecc71 !important;
+        }
+
+        .quiz-option.wrong {
+            background: rgba(231, 76, 60, 0.3) !important;
+            border-color: #e74c3c !important;
+        }
+
+        #quiz-result {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 24px;
+        }
+
+        .next-btn {
+            display: none;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: var(--secondary);
+            color: var(--dark);
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Блок ввода имени для сертификата */
+        .cert-form {
+            display: none;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(212, 175, 55, 0.4);
+        }
+
+        .cert-form input {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid var(--secondary);
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 10px;
+            font-family: sans-serif;
+        }
+
+        .cert-btn {
+            padding: 10px 20px;
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .cert-btn:hover {
+            background: #27ae60;
+        }
+       /* Памятник фото */
+       .quiz-img {
+            display: block;          /* Делает картинку блочным элементом */
+            width: 180px;             /* Растягивает на всю ширину контейнера (или задайте фиксированную, например max-width: 400px) */
+            max-width: 500px;        /* Ограничиваем максимальную ширину, чтобы она не была слишком гигантской */
+            height: 180px;           /* Фиксированная высота */
+            object-fit: cover;       /* Аккуратная обрезка под пропорции */
+            object-position: center; /* Центрирование содержимого картинки */
+            border-radius: 8px;
+            margin: 0 auto 20px auto;/* Автоматические отступы слева и справа центрируют картинку */
+            border: 2px solid var(--secondary);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        /* Модальное окно и печать Сертификата */
+        #cert-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .cert-box {
+            background: #fdfbf7;
+            color: #1a1a24;
+            width: 100%;
+            max-width: 750px;
+            padding: 40px;
+            border: 12px double var(--secondary);
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .cert-header {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+        }
+
+        .cert-title {
+            font-size: 2.2rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .cert-name {
+            font-size: 2rem;
+            color: #1a1a24;
+            font-weight: bold;
+            text-decoration: underline;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .cert-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .cert-stamp {
+            width: 80px;
+            height: 80px;
+            border: 3px double var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transform: rotate(-12deg);
+        }
+
+        .modal-controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .print-btn { background: var(--secondary); color: var(--dark); }
+        .close-btn { background: #e74c3c; color: #fff; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #cert-modal, #cert-modal * { visibility: visible; }
+            #cert-modal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: #fff;
+            }
+            .modal-controls { display: none; }
+            .cert-box { border: 10px double var(--secondary); box-shadow: none; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: var(--dark);
+            color: #aaa;
+            font-size: 0.9rem;
+            border-top: 1px solid #333;
+            margin-top: 50px;
+        }
+      .publisher-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="hero-profile">
+            <span class="badge">Городской конкурс по информационно-коммуникационным технологиям
+«Мой город. Моя Родина. А.М. Байков - преобразователь города
+Ростова-на-Дону»</span>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Baikov_AM.jpg" alt="Портрет А.М. Байкова" class="avatar">
+            <h1>Андрей Матвеевич Байков</h1>
+            <p>«Человек, превративший купеческую станицу в Южную столицу России»</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Интерактивный симулятор -->
+        <section class="interactive-sim">
+            <h2 class="sim-title">Интерактивная трансформация Ростова (1862–1889)</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Переключайте режим, чтобы увидеть масштаб изменений:</p>
+            
+            <div class="toggle-btn-container">
+                <button class="sim-btn btn-before" onclick="setCityState('before')">Ростов до 1862 г.</button>
+                <button class="sim-btn btn-after active" onclick="setCityState('after')">Ростов при Байкове</button>
+            </div>
+
+            <div class="city-state" id="city-data"></div>
+        </section>
+
+        <!-- Блок использования обложки книги и дополнительных данных из материалов -->
+        <section class="book-section">
+            <img src="oblozka.png" alt="Обложка книги А.М. Байков — Контрагент Кавказских Минеральных Вод" class="book-img" onerror="this.src='https://via.placeholder.com/160x220?text=Обложка+книги'">
+            <div class="book-content">
+                <h3>Из материалов биографической книги</h3>
+                <p>Согласно документальным хроникам (серия «Жизнь Замечательных Людей»):</p>
+                <ul>
+                    <li><strong>Биржевой комитет:</strong> С 1885 года Андрей Байков являлся председателем Ростовского-на-Дону биржевого комитета.</li>
+                    <li><strong>Культурное наследие:</strong> В городской думе он дважды (в 1885 и 1888 гг.) инициировал создание Научно-художественного и промышленного музея, а также строительство общего здания для него и Городской публичной библиотеки.</li>
+                    <li><strong>Общественная работа:</strong> В 1887 году он состоял председателем попечительного совета Петропавловской богадельни в Ростове.</li>
+<!-- Ссылка отдельной строкой сразу после текста -->
+            <a href="https://sneg-izdat.ru/" target="_blank" rel="noopener noreferrer" class="publisher-link-block">
+                Официальный сайт издательства «СНЕГ» →
+            </a>
+                </ul>
+            </div>
+        </section>
+       
+        <!-- Галерея объектов наследия -->
+        <h2>Наследие Байкова в истории Ростова-на-Дону</h2>
+        <div class="gallery-grid">
+            <div class="gallery-card">
+                <img src="sadovaya.png" alt="Большая Садовая" onerror="this.src='https://via.placeholder.com/400x220?text=Большая+Садовая'">
+                <div class="card-text">
+                    <h4>Большая Садовая улица</h4>
+                    <p>При Байкове улица стала главной артерией города: были замощены мостовые и установлено газовое освещение.</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="park.png" alt="Парк им. М. Горького" onerror="this.src='https://via.placeholder.com/400x220?text=Парк+им.+М.+Горького'">
+                <div class="card-text">
+                    <h4>Парк им. М. Горького</h4>
+                    <p>А.М. Байков превратил заброшенный пустырь в любимый Городской сад с фонтанами и зелеными аллеями.</p>
+                </div>
+            </div>
+            <div class="gallery-card">
+                <img src="vokzal.png" alt="Главный Вокзал" onerror="this.src='https://via.placeholder.com/400x220?text=Главный+Вокзал'">
+                <div class="card-text">
+                    <h4>Главный Вокзал и транспорт</h4>
+                    <p>Развитие железных дорог и появление городской конки превратило Ростов в крупнейший транспортный хаб Юга.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Викторина -->
+        <section class="quiz-section">
+        <!-- Картинка памятника в викторине -->
+            <img src="pamyatnik.png" alt="Памятник А.М. Байкову" class="quiz-img" onerror="this.style.display='none'">
+            <h3>Экспресс-викторина «Знаток истории Ростова»</h3>
+            <div class="quiz-progress" id="quiz-progress">Вопрос 1 из 3</div>
+            
+            <p id="quiz-question" style="font-size: 1.1rem; margin-bottom: 15px;"></p>
+            <div id="quiz-options"></div>
+            
+            <div id="quiz-result"></div>
+            <button class="next-btn" id="next-btn" onclick="nextQuestion()">Следующий вопрос</button>
+
+            <!-- Поле выдачи сертификата -->
+            <div class="cert-form" id="cert-form">
+                <h4 style="color: var(--secondary); margin-bottom: 10px;">🎓 Получить именной сертификат</h4>
+                <p style="font-size: 0.9rem; margin-bottom: 10px;">Введите ваше имя и фамилию для генерации диплома знатока:</p>
+                <input type="text" id="user-name" placeholder="Например: Иван Иванов" maxlength="40">
+                <br>
+                <button class="cert-btn" onclick="generateCertificate()">📜 Сформировать сертификат</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Модальное окно с сертификатом -->
+    <div id="cert-modal">
+        <div>
+            <div class="cert-box">
+                <div class="cert-header">Городской конкурс исследовательских проектов • Ростов-на-Дону</div>
+                <div class="cert-title">СЕРТИФИКАТ</div>
+                <p>Настоящим подтверждается, что</p>
+                <div class="cert-name" id="cert-user-name">Иван Иванов</div>
+                <p>успешно прошел краеведческую викторину и подтвердил статус</p>
+                <p style="font-size: 1.2rem; color: var(--primary); font-weight: bold; margin-top: 10px;">
+                    «Знаток эпохи А.М. Байкова»
+                </p>
+                <p style="font-size: 0.9rem; margin-top: 10px; color: #555;">
+                    Результат: <span id="cert-score">3 из 3</span> баллов
+                </p>
+
+                <div class="cert-footer">
+                    <div>
+                        <p><strong>Оргкомитет проекта</strong></p>
+                        <p id="cert-date">Дата: 2026 г.</p>
+                    </div>
+                    <div class="cert-stamp">Краеведение<br>Ростов</div>
+                    <div>
+                        <p>_______________________</p>
+                        <p style="font-size: 0.8rem; color: #777;">Подпись эксперта</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-controls">
+                <button class="modal-btn print-btn" onclick="window.print()">🖨️ Напечатать / Сохранить в PDF</button>
+                <button class="modal-btn close-btn" onclick="closeModal()">Закрыть</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Проект подготовлен для городского конкурса учениками 9 "А" класса школы №80 • Ростов-на-Дону, 2026г.</p>
+    </footer>
+
+    <script>
+        const states = {
+            before: [
+                { title: "Улицы и дороги", desc: "Грязь, отсутствие покрытия, непроходимость в дождливый сезон." },
+                { title: "Освещение", desc: "Полная темнота в ночное время суток. Редкие тусклые масляные фонари." },
+                { title: "Водоснабжение", desc: "Доставка воды водовозами из Дона в бочках, отсутствие фильтрации." },
+                { title: "Транспорт", desc: "Частные извозчики, отсутствие регулярного общественного транспорта." }
+            ],
+            after: [
+                { title: "Улицы и дороги", desc: "Масштабное мощение улиц камнем, тротуары, правильная планировка." },
+                { title: "Освещение", desc: "Первые 600 газовых фонарей, современный облик центральных улиц." },
+                { title: "Водоснабжение", desc: "Полноценный городской водопровод с очистительными сооружениями." },
+                { title: "Транспорт", desc: "Запуск конно-железной дороги (конки), связавшей район Нахичевани с центром." }
+            ]
+        };
+
+        function setCityState(type) {
+            const container = document.getElementById('city-data');
+            const buttons = document.querySelectorAll('.sim-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if(type === 'before') buttons[0].classList.add('active');
+            else buttons[1].classList.add('active');
+
+            container.innerHTML = states[type].map(item => `
+                <div class="state-card">
+                    <h4>${item.title}</h4>
+                    <p>${item.desc}</p>
+                </div>
+            `).join('');
+        }
+
+       
+const quizData = [
+            {
+                question: "Какой общественный транспорт появился в Ростове благодаря инициативе А.М. Байкова?",
+                options: [
+                    "Электрический монорельс",
+                    "Конно-железная дорога (конка)",
+                    "Подземный метрополитен",
+                    "Паровой дирижабль"
+                ],
+                correct: 1,
+                explanation: "Верно! Конка стала первым регулярным общественным транспортом Ростова и предвестником трамвая."
+            },
+            {
+                question: "Что впервые осветило улицы Ростова-на-Дону в 1865 году?",
+                options: [
+                    "Светодиодные панели",
+                    "Керосиновые факелы",
+                    "Газовые фонари (около 600 штук)",
+                    "Электрические дуговые лампы"
+                ],
+                correct: 2,
+                explanation: "Правильно! При Байкове построили газовый завод и установили 600 первых газовых фонарей."
+            },
+            {
+                question: "Что находилось на месте современного Парка им. М. Горького до благоустройства Байковым?",
+                options: [
+                    "Заброшенный городскими свалками пустырь",
+                    "Военный артиллерийский полигон",
+                    "Крупный купеческий порт",
+                    "Густой хвойный лес"
+                ],
+                correct: 0,
+                explanation: "Точно! Байков превратил заброшенный пустырь в ухоженный Городской сад с эстрадой и ротондами."
+            },
+            {
+                question: "Где в Ростове-на-Дону установлен памятник градоначальнику А.М. Байкову?",
+                options: [
+                    "На Привокзальной площади",
+                    "В Парке им. Максима Горького (Большая Садовая)",
+                    "На набережной реки Дон",
+                    "На Театральной площади"
+                ],
+                correct: 1,
+                explanation: "Верно! Бронзовый памятник А.М. Байкову открыт в 2004 году у входа в Парк им. М. Горького со стороны Большой Садовой."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function renderQuestion() {
+            const qData = quizData[currentQuestion];
+            document.getElementById('quiz-progress').innerText = `Вопрос ${currentQuestion + 1} из ${quizData.length}`;
+            document.getElementById('quiz-question').innerText = qData.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            qData.options.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option';
+                btn.innerText = `${index + 1}. ${optText}`;
+                btn.onclick = () => selectOption(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('quiz-result').innerText = '';
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function selectOption(selectedIndex, selectedBtn) {
+            const qData = quizData[currentQuestion];
+            const allBtns = document.querySelectorAll('.quiz-option');
+            
+            allBtns.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === qData.correct) {
+                selectedBtn.classList.add('correct');
+                document.getElementById('quiz-result').style.color = '#2ecc71';
+                document.getElementById('quiz-result').innerText = '✓ ' + qData.explanation;
+                score++;
+            } else {
+                selectedBtn.classList.add('wrong');
+                allBtns[qData.correct].classList.add('correct');
+                document.getElementById('quiz-result').style.color = '#e74c3c';
+                document.getElementById('quiz-result').innerText = '✗ Неверно. ' + qData.explanation;
+            }
+
+            const nextBtn = document.getElementById('next-btn');
+            if (currentQuestion < quizData.length - 1) {
+                nextBtn.innerText = 'Следующий вопрос';
+            } else {
+                nextBtn.innerText = 'Завершить тест';
+            }
+            nextBtn.style.display = 'inline-block';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                renderQuestion();
+            } else {
+                showFinalResults();
+            }
+        }
+
+        function showFinalResults() {
+            document.getElementById('quiz-progress').innerText = 'Викторина завершена!';
+            document.getElementById('quiz-question').innerText = `Ваш результат: ${score} из ${quizData.length} правильных ответов!`;
+            document.getElementById('quiz-options').innerHTML = '';
+            document.getElementById('quiz-result').style.color = '#d4af37';
+            
+            if (score === 4) {
+                document.getElementById('quiz-result').innerText = '🏆 Отлично! Вы истинный краевед и эксперт по эпохе Байкова!';
+            } else if (score >= 2) {
+                document.getElementById('quiz-result').innerText = '👍 Хороший результат! Вы отлично знаете основные вехи развития Ростова.';
+            } else {
+                document.getElementById('quiz-result').innerText = '📖 Стоит перечитать материал страницы и попробовать еще раз!';
+            }
+
+            document.getElementById('next-btn').innerText = 'Пройти заново';
+            document.getElementById('next-btn').onclick = restartQuiz;
+
+            // Показываем форму сертификата
+            document.getElementById('cert-form').style.display = 'block';
+        }
+        
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('cert-form').style.display = 'none';
+            document.getElementById('next-btn').onclick = nextQuestion;
+            renderQuestion();
+        }
+
+        function generateCertificate() {
+            const nameInput = document.getElementById('user-name').value.trim();
+            if (!nameInput) {
+                alert('Пожалуйста, введите ваше имя и фамилию.');
+                return;
+            }
+
+            document.getElementById('cert-user-name').innerText = nameInput;
+            document.getElementById('cert-score').innerText = score + ' из ' + quizData.length;
+            
+            const today = new Date();
+            document.getElementById('cert-date').innerText = 'Дата: ' + today.toLocaleDateString('ru-RU');
+
+            document.getElementById('cert-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('cert-modal').style.display = 'none';
+        }
+
+        setCityState('after');
+        renderQuestion();
+    </script>
+</body>
+</html>
